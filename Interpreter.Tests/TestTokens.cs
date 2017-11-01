@@ -5,14 +5,13 @@ using System.Linq;
 
 /*
  * 
- * find 
  * 
  * 
  */
 namespace Interpreter.Tests
 {
     [TestClass]
-    public class TestInterpreter
+    public class TestTokens
     {
         [TestMethod]
         public void TestSingleSymbolTokenCreation()
