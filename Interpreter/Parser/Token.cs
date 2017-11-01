@@ -16,7 +16,7 @@ namespace Interpreter
             Value,
             Assigning,
             In, // Include
-            Find,
+            Exists,
             Count,
             Indexof,
             Select,

@@ -14,11 +14,13 @@ namespace Interpreter.Tables
         Function
     }
     
-    public class MemoryTable : HashSet<Variable>
+    public class MemoryTable
     {
+        private HashSet<Variable> _table = null;
         private static MemoryTable _instance = null;
         private MemoryTable()
         {
+            _table = new HashSet<Variable>();
         }
         public static MemoryTable Instance
         {
@@ -30,15 +32,15 @@ namespace Interpreter.Tables
         }
         public bool Define(Variable var)
         {
-            return this.Add(var);
+            return _table.Add(var);
         }
         public Variable Lookup(string name)
         {
-            return this.Where(v => v.Name == name).Single();
+            return _table.Where(v => v.Name == name).Single();
         }
         public void Update(string name, object value)
         {
-            this.Where(v => v.Name == name).Single().Value = value;
+            _table.Where(v => v.Name == name).Single().Value = value;
         }
     }
 }
