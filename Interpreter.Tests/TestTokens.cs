@@ -27,7 +27,7 @@ namespace Interpreter.Tests
             var expected = new List<Token>()
             {
                 Token.GetToken("VAR"),
-                Token.GetToken("VARNAME"),
+                Token.GetToken("varname"),
                 Token.GetToken("="),
                 Token.GetToken("\"valueee u u ueee\""),
                 Token.GetToken(";")
@@ -45,7 +45,7 @@ namespace Interpreter.Tests
             var expected = new List<Token>()
             {
                 Token.GetToken("VAR"),
-                Token.GetToken("VARNAME"),
+                Token.GetToken("varname"),
                 Token.GetToken("="),
                 Token.GetToken("123"),
                 Token.GetToken(";")
@@ -63,17 +63,16 @@ namespace Interpreter.Tests
         {
             var expected = new List<Token>()
             {
-                Token.GetToken("VAR"),
-                Token.GetToken("VARNAME"),
+                Token.GetToken("varname"),
                 Token.GetToken("="),
-                Token.GetToken("FIND"),
+                Token.GetToken("EXISTS"),
                 Token.GetToken("\"template value\""),
                 Token.GetToken("IN"),
                 Token.GetToken("\"source string\""),
                 Token.GetToken(";")
             };
 
-            var src = "   var  varname   = find \"template value\" in \"source string\";";
+            var src = "    varname   = exists \"template value\" in \"source string\";";
 
             var actual = new Parser.Parser().Parse(src).ToList();
 
@@ -84,8 +83,7 @@ namespace Interpreter.Tests
         {
             var expected = new List<Token>()
             {
-                Token.GetToken("VAR"),
-                Token.GetToken("VARNAME"),
+                Token.GetToken("varname"),
                 Token.GetToken("="),
                 Token.GetToken("EXISTS"),
                 Token.GetToken("\"template value\""),
@@ -99,7 +97,7 @@ namespace Interpreter.Tests
                 Token.GetToken(";")
             };
 
-            var src = "var varname = exists \"template value\" in \"source string\" where startswith \"start string\" endswith \"end string\";";
+            var src = "varname = exists \"template value\" in \"source string\" where startswith \"start string\" endswith \"end string\";";
 
             var actual = new Parser.Parser().Parse(src).ToList();
 
@@ -110,12 +108,9 @@ namespace Interpreter.Tests
         {
             var expected = new List<Token>()
             {
-                Token.GetToken("VAR"),
-                Token.GetToken("VARNAME"),
+                Token.GetToken("varname"),
                 Token.GetToken("="),
                 Token.GetToken("SELECT"),
-                Token.GetToken("TOP"),
-                Token.GetToken("1"),
                 Token.GetToken("\"template value\""),
                 Token.GetToken("FROM"),
                 Token.GetToken("\"source string\""),
@@ -128,7 +123,7 @@ namespace Interpreter.Tests
                 Token.GetToken(";")
             };
 
-            var src = "var varname = select top 1 \"template value\" from \"source string\" where startswith \"start string\" endswith \"end string\" ASC;";
+            var src = " varname = select  \"template value\" from \"source string\" where startswith \"start string\" endswith \"end string\" ASC;";
 
             var actual = new Parser.Parser().Parse(src).ToList();
 

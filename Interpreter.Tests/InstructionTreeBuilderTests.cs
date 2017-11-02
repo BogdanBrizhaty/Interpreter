@@ -20,6 +20,7 @@ namespace Interpreter.Tests
         {
             tokens = new List<Token>()
             {
+                Token.GetToken("VAR"),
                 Token.GetToken("MyVar1"),
                 Token.GetToken("="),
                 Token.GetToken("\"abrakadabra\""),
@@ -33,6 +34,7 @@ namespace Interpreter.Tests
                 Token.GetToken("MyVar1"),
                 Token.GetToken(";"),
 
+                Token.GetToken("VAR"),
                 Token.GetToken("MyBoolVar"),
                 Token.GetToken("="),
                 Token.GetToken("TRUE"),

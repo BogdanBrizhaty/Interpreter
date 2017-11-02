@@ -43,5 +43,9 @@ namespace Interpreter.Tables
         {
             _table.Where(v => v.Name == name).Single().Value = value;
         }
+        public void Clear()
+        {
+            this._table.Clear();
+        }
     }
 }

@@ -37,8 +37,8 @@ namespace Interpreter
             
             
             // loop
-            Each,
-            EndEach,
+            //Each,
+            //EndEach,
             // end of instruction
             Semicolon
         }

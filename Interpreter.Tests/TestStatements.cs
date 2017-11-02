@@ -17,10 +17,14 @@ namespace Interpreter.Tests
         [TestMethod]
         public void TestVariableDefining()
         {
+            _table.Clear();
+
             var tokens = new List<Token>()
             {
+                Token.GetToken("VAR"),
                 Token.GetToken("MyVar1"),
                 Token.GetToken("="),
+                Token.GetToken(";"),
                 Token.GetToken("\"value here\"")
             };
             var def = new DefineVariableStatement(tokens, _table);
@@ -31,11 +35,14 @@ namespace Interpreter.Tests
         [TestMethod]
         public void TestBoolVariableDefining()
         {
+            _table.Clear();
             var tokens = new List<Token>()
             {
+                Token.GetToken("VAR"),
                 Token.GetToken("MyVar1"),
                 Token.GetToken("="),
-                Token.GetToken("true")
+                Token.GetToken("true"),
+                Token.GetToken(";")
             };
             var def = new DefineVariableStatement(tokens, _table);
             def.Execute();
@@ -43,18 +50,13 @@ namespace Interpreter.Tests
             Assert.IsTrue(_table.Lookup("MyVar1") != null);
         }
         [TestMethod]
-        public void TestOpList()
-        {
-            OpList.Operations["WRITELINE"]("strtoprint");
-            Assert.IsTrue((bool)OpList.Operations["EXISTS"](new List<string>() { "abrakadabra", "bra" }));
-        }
-        [TestMethod]
         public void TestFunctionCall()
         {
             var tokens = new List<Token>()
             {
                 Token.GetToken("WRITELINE"),
-                Token.GetToken("\"value to print\"")
+                Token.GetToken("\"value to print\""),
+                Token.GetToken(";")
             };
             var call = new FunctionCallStatement(tokens, _table);
             bool flag = false;
@@ -71,7 +73,8 @@ namespace Interpreter.Tests
             var tokens = new List<Token>()
             {
                 Token.GetToken("WRITELINE"),
-                Token.GetToken("\"value to print\"")
+                Token.GetToken("\"value to print\""),
+                Token.GetToken(";")
             };
             var call = new FunctionCallStatement(tokens, _table);
             bool flag = false;
@@ -85,10 +88,15 @@ namespace Interpreter.Tests
         [TestMethod]
         public void TestInvalidFunctionCall()
         {
+            _table.Clear();
+
             var defTokens = new List<Token>()
             {
+                Token.GetToken("VAR"),
                 Token.GetToken("MyVar1"),
-                Token.GetToken("\"value here\"")
+                Token.GetToken("="),
+                Token.GetToken("\"value here\""),
+                Token.GetToken(";")
             };
             var def = new DefineVariableStatement(defTokens, _table);
             def.Execute();
@@ -96,7 +104,8 @@ namespace Interpreter.Tests
             var tokens = new List<Token>()
             {
                 Token.GetToken("WRITELINE"),
-                Token.GetToken("MyVar1")
+                Token.GetToken("MyVar1"),
+                Token.GetToken(";")
             };
             var call = new FunctionCallStatement(tokens, _table);
             bool flag = false;
@@ -129,18 +138,26 @@ namespace Interpreter.Tests
         [TestMethod]
         public void TestQueryStatement()
         {
+            _table.Clear();
+
             var defTokens = new List<Token>()
             {
+                Token.GetToken("VAR"),
                 Token.GetToken("MyVar1"),
-                Token.GetToken("\"value here\"")
+                Token.GetToken("="),
+                Token.GetToken("\"value here\""),
+                Token.GetToken(";")
             };
             var def = new DefineVariableStatement(defTokens, _table);
-            def.Execute();
+            //def.Execute();
 
             var defTokens2 = new List<Token>()
             {
+                Token.GetToken("VAR"),
                 Token.GetToken("MyVar2"),
-                Token.GetToken("\"value here\"")
+                Token.GetToken("="),
+                Token.GetToken("\"value here\""),
+                Token.GetToken(";")
             };
             var def2 = new DefineVariableStatement(defTokens2, _table);
             def2.Execute();
@@ -152,8 +169,8 @@ namespace Interpreter.Tests
                 Token.GetToken("COUNT"),
                 Token.GetToken("\"template\""),
                 Token.GetToken("IN"),
-                Token.GetToken("MyVar2")
-
+                Token.GetToken("MyVar2"),
+                Token.GetToken(";")
             };
             var query = new QueryStatement(tokens, _table);
             bool flag = false;
@@ -168,18 +185,26 @@ namespace Interpreter.Tests
         [TestMethod]
         public void TestComplexQueryStatement()
         {
+            _table.Clear();
+
             var defTokens = new List<Token>()
             {
+                Token.GetToken("VAR"),
                 Token.GetToken("MyVar1"),
-                Token.GetToken("FALSE")
+                Token.GetToken("="),
+                Token.GetToken("FALSE"),
+                Token.GetToken(";")
             };
             var def = new DefineVariableStatement(defTokens, _table);
             //def.Execute();
 
             var defTokens2 = new List<Token>()
             {
+                Token.GetToken("VAR"),
                 Token.GetToken("MyVar2"),
-                Token.GetToken("\"abrakadabra\"")
+                Token.GetToken("="),
+                Token.GetToken("\"abrakadabra\""),
+                Token.GetToken(";")
             };
             var def2 = new DefineVariableStatement(defTokens2, _table);
             def2.Execute();
@@ -198,8 +223,8 @@ namespace Interpreter.Tests
                 Token.GetToken("ENDSWITH"),
                 Token.GetToken("\"a\""),
                 Token.GetToken("MATCH"),
-                Token.GetToken("MIN")
-
+                Token.GetToken("MIN"),
+                Token.GetToken(";")
             };
             var query = new QueryStatement(tokens, _table);
             bool flag = false;
@@ -212,7 +237,8 @@ namespace Interpreter.Tests
             tokens = new List<Token>()
             {
                 Token.GetToken("WRITELINE"),
-                Token.GetToken("MyVar1")
+                Token.GetToken("MyVar1"),
+                Token.GetToken(";")
             };
             var call = new FunctionCallStatement(tokens, _table);
             call.Execute();
