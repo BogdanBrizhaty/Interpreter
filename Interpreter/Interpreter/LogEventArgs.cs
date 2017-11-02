@@ -17,7 +17,7 @@ namespace Interpreter.Interpreter
         }
         public override string ToString()
         {
-            return String.Format("{ at {0:dd/MM/yyyy H:mm:ss zzz} msg: {1} }", LogDate, LogMessage);
+            return String.Format("at: {0:dd/MM/yyyy H:mm:ss zzz} msg: {1} ", LogDate, LogMessage);
         }
     }
 }
