@@ -18,5 +18,17 @@ namespace Interpreter
             Type = type;
             Value = value;
         }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            var other = (Variable)obj;
+            return (this.Type.CompareTo(other.Type) +
+                this.Name.CompareTo(other.Name)) == 0 &&
+                this.Value == other.Value;
+            //return base.Equals(obj);MyBoolVar
+        }
     }
 }

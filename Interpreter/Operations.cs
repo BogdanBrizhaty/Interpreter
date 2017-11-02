@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Interpreter.Interpreter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,19 +20,68 @@ namespace Interpreter
                 {
                     {"WRITELINE", obj =>
                         {
-                            //var type = obj.GetType();
-                            var @string = (string)obj;
-                            Console.WriteLine(@string);
+                            //var ttt = ;
+                            if (obj.GetType() == typeof(List<int>))
+                                foreach (var item in (List<int>)obj)
+                                    Console.WriteLine(obj.ToString());
+
+                            if (obj.GetType() == typeof(List<string>))
+                                foreach (var item in (List<string>)obj)
+                                    Console.WriteLine(obj.ToString());
+                            else
+                                Console.WriteLine(obj.ToString());
                             return 0;
                         }
                     },
                     {"EXISTS", obj =>
                         {
-                            var source = ((IList<string>)obj).First();
-                            var lookFor = ((IList<string>)obj).Last();
-                            return Regex.IsMatch(source, lookFor);
+                            var param = (QueryParams)obj;
+                            return Regex.IsMatch(param.Source, param.GetLookFor());
                         }
-
+                    },
+                    //{"ASC", obj =>
+                    //    {
+                    //        ((IList<string>)obj).OrderBy(s => s);
+                    //        return 0;
+                    //    }
+                    //},
+                    //{"DESC", obj =>
+                    //    {
+                    //        ((IList<string>)obj).OrderByDescending(s => s);
+                    //        return 0;
+                    //    }
+                    //},
+                    {"INDEXOF", obj =>
+                        {
+                            var param = (QueryParams)obj;
+                            return Regex.Matches(param.Source, param.GetLookFor()).Cast<Match>().Min(m => m.Index);
+                            //return param.Source.IndexOf(param.GetLookFor());
+                        }
+                    },
+                    {"LASTINDEXOF", obj =>
+                        {
+                            var param = (QueryParams)obj;
+                            return Regex.Matches(param.Source, param.GetLookFor()).Cast<Match>().Max(m => m.Index);
+                            //return param.Source.LastIndexOf(param.GetLookFor());
+                        }
+                    },
+                    {"COUNT", obj =>
+                        {
+                            var param = (QueryParams)obj;
+                            return Regex.Matches(param.Source, param.GetLookFor()).Count;
+                        }
+                    },
+                    {"SELECT", obj =>
+                        {
+                            var param = (QueryParams)obj;
+                            return Regex.Matches(param.Source, param.GetLookFor()).Cast<Match>().Select(m => m.Value).ToList();
+                        }
+                    },
+                    {"INDEXES", obj =>
+                        {
+                            var param = (QueryParams)obj;
+                            return Regex.Matches(param.Source, param.GetLookFor()).Cast<Match>().Select(m => m.Index).ToList();
+                        }
                     }
                 };
                 return _ops;
