@@ -18,10 +18,19 @@ namespace Interpreter.Interpreter.Statements
         {
             Tokens = tokens;
             _memory = table;
+            Children = new List<IStatement>();
+            this.ExceptionThrown += Output.Log;
         }
+        //public Statement(IList<Token> tokens, MemoryTable table)
+        //{
+        //    Tokens = tokens;
+        //    _memory = table;
+        //}
         protected virtual void OnExceptionThrown(RuntimeInterpreterExceptionEventArgs args)
         {
             ExceptionThrown?.Invoke(args);
+            //this.Execute();
+            return;
         }
         //public abstract void Execute();
         public virtual void Execute()
@@ -29,6 +38,17 @@ namespace Interpreter.Interpreter.Statements
             if (this.Children != null)
                 foreach (var child in Children)
                     child.Execute();
+        }
+        public override bool Equals(object obj)
+        {
+            var th = this.Children.Select(c => c.GetType()).ToList();
+            var oth = ((Statement)obj).Children.Select(c => c.GetType()).ToList();
+            return th.SequenceEqual(oth);
+            //return base.Equals(obj);
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

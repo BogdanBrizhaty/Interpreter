@@ -14,12 +14,21 @@ namespace Interpreter.Interpreter.Statements
         }
         public override void Execute()
         {
-            var varname = Tokens.First().Value;
-            var varvalue = Tokens.Last();
-            var type = varvalue.Value.StartsWith("\"") ? DataType.Text : DataType.Number;
-            _memory.Define(new Variable(type, varname, varvalue.Value));
+            var varname = Tokens[1].Value;
+            var varvalue = Tokens[Tokens.Count - 2];
 
-            base.Execute();
+            if (varvalue.Value.StartsWith("\""))
+                _memory.Define(new Variable(DataType.Text, varname, varvalue.Value.Substring(1, varvalue.Value.Length - 2)));
+            else
+            {
+                if (varvalue.Value == ("true").ToUpper() || varvalue.Value == ("false").ToUpper())
+                    _memory.Define(new Variable(DataType.Boolean, varname, varvalue.Value));
+                else
+                    _memory.Define(new Variable(DataType.Number, varname, varvalue.Value));
+            }
+
+
+                base.Execute();
         }
     }
 }

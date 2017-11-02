@@ -15,23 +15,23 @@ namespace Interpreter.Interpreter.Statements
 
         public override void Execute()
         {
-            var type = Tokens.Last().Type;//.Value.StartsWith("\"") ? DataType.Text : DataType.Number;
+            var type = Tokens[Tokens.Count - 2].Type;//.Value.StartsWith("\"") ? DataType.Text : DataType.Number;
 
             if (OpList.Operations.Keys.Contains(Tokens.First().Value))
                 if (type == Token.TokenType.Value)
-                    OpList.Operations[Tokens.First().Value](Tokens.Last().Value);
+                    OpList.Operations[Tokens.First().Value]((Tokens[Tokens.Count - 2].Value).Substring(1, Tokens[Tokens.Count - 2].Value.Length - 2));
                 else
                 {
                     try
                     {
-                        var variable = _memory.Lookup(Tokens.Last().Value);
+                        var variable = _memory.Lookup(Tokens[Tokens.Count - 2].Value);
                         OpList.Operations[Tokens.First().Value](variable.Value);
                     }
                     catch
                     {
                         OnExceptionThrown(
                             new RuntimeInterpreterExceptionEventArgs(
-                                String.Format("Variable not found: {0}", Tokens.Last().Value)
+                                String.Format("Variable not found: {0}", Tokens[Tokens.Count - 2].Value)
                             )
                         );
                     }
@@ -39,7 +39,7 @@ namespace Interpreter.Interpreter.Statements
             else
                 OnExceptionThrown(
                     new RuntimeInterpreterExceptionEventArgs(
-                        String.Format("No built-in function with name {0} founded", Tokens.Last().Value)
+                        String.Format("No built-in function with name {0} founded", Tokens[Tokens.Count - 2].Value)
                     )
                 );
 
