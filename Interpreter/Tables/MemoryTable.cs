@@ -10,6 +10,7 @@ namespace Interpreter.Tables
     {
         Text,
         Number,
+        Boolean,
         ResourceList,
         Function
     }

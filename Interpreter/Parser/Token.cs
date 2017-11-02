@@ -10,7 +10,6 @@ namespace Interpreter
     {
         public enum TokenType
         {
-            Semicolon,
             Var,
             Variable,
             Value,
@@ -18,18 +17,30 @@ namespace Interpreter
             In, // Include
             Exists,
             Count,
+            Match,
+            Min,
+            Max,
+            Indexes,
             Indexof,
+            LastIndexof,
             Select,
             From,
             Writeline,
             Where,
+            True,
+            False,
             StartsWith,
             EndsWith,
-            Asc,
-            Desc,
-            Top,
+            // order of sort
+            //Asc,
+            //Desc,
+            
+            
+            // loop
             Each,
-            EndEach
+            EndEach,
+            // end of instruction
+            Semicolon
         }
         public Token(TokenType type, string value)
         {
@@ -45,10 +56,14 @@ namespace Interpreter
         public static Token GetToken(string word)
         {
 
+            if (word.ToUpper() == "TRUE" || word.ToUpper() == "FALSE")
+                return new Token(TokenType.Value, word.ToUpper());
+
             var values = Enum.GetValues(typeof(TokenType)).Cast<TokenType>().ToList();
-            var ttype = values.Where(v => v.ToString().ToUpper() == word).FirstOrDefault();
-            if (ttype.ToString().ToUpper() == word)
-                return new Token(ttype, word);
+            var ttype = values.Where(v => v.ToString().ToUpper() == word.ToUpper()).FirstOrDefault();
+
+            if (ttype.ToString().ToUpper() == word.ToUpper())
+                return new Token(ttype, word.ToUpper());
 
             if (word == ";")
                 return new Token(TokenType.Semicolon, ";");

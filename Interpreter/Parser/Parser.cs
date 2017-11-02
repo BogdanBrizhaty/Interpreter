@@ -60,7 +60,7 @@ namespace Interpreter.Parser
             while (pointer < src.Length && src[pointer] != ' ' && src[pointer] != ';' && src[pointer] != '=')
                 buffer += src[pointer++];
 
-            return Token.GetToken(buffer.ToUpper());
+            return Token.GetToken(buffer);
         }
     }
 }
